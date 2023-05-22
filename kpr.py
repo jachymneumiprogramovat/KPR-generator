@@ -1,64 +1,56 @@
+idlist = ["a","b","c","d","e","f","g","h","i","j","k"]
+
+body = []
+primky=[]
+
 class primka:
-    def __init__(self,elements:list[int]) -> None:
+    def __init__(self,elements:list[bod]) -> None:
         self.elements=elements
-        pass
-    def sort(self,bod)->None:
-        if self not in protina[bod]:
-            protina[bod].append(self)
-
-body=[1,2,3,4]
-protina={}
-for bod in body:
-    protina[bod]=[]
-
-primky=[
-    primka([1,3]),
-    primka([3,2]),
-    primka([1])
-]
+        self.protina = []
+    
+    def update_protina(self)->None:
+        for primka in primky:
+            for element in self.elements:
+                if element in primka.elements:
+                    self.protina.append(primka)
 
 
-def protni():
-    for bod in protni:
-        for cara in primky:
-            cara.sort(bod)
+class bod:
+    def __init__(self,protina:list[primka],id:str) -> None:
+        self.id=id
+        self.nalezi=protina
+        self.navlne = []
+    
+    def update_navlne(self)->None:
+        for bod in body:
+            for primka in bod.protina:
+                if primka in self.nalezi:
+                    self.navlne.append(bod)
 
-protni()
-print(protina)
 
-def disjunkt(list1,list2):
-    """Vrací true jen když dva listy nemají žádný stejný prvek"""
-    for node in list1:
-        if node in list2:
+def protahni_primku(primka:primka,bod:bod)->None:
+    primka.elements.append(bod)
+    bod.nalezi.append(primka)
+
+def pridej_primku(body:list[bod])->primka:
+    nprimka= primka(body)
+    primky.append(nprimka)
+    for bod in body:
+        bod.nalezi.append(nprimka)
+    return nprimka
+
+def pridej_bod(primka1:primka,primka2:primka)->bod:
+    nbod = bod([primka1,primka2],idlist[len(body)])
+    body.append(nbod)
+
+
+#delete later meaby useles
+def disjunkt_primky(primka1:primka,primka2:primka)->bool:
+    for element in primka1.elements:
+        if element in primka2.elements:
             return False
-    return True,node
+    return True
 
 
-
-for line in primky:
-    for cara in primky:
-        if disjunkt(line.elements,cara.elements):
-            for node in line.elements:
-                for bod in cara.elements:
-                    if disjunkt(protina[bod], protina[node]):
-                        print(protina[bod],protina[node])
-                        line.elements.append(bod)
-                        cara.elements.append(node)
-                        
-print("debug")
-for cara in primky:
-    print(cara.elements)
-
-print(protina)
-                    
-                          
-
-
-
-
-
-
-
-
-
+#first the primka axiom
 
