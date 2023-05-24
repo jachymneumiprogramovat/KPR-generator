@@ -46,23 +46,24 @@ class bod:
 
 def protahni_primku(primka:primka,bod:bod)->None:
     primka.elements.append(bod)
+    primka.protina.append([x for x in bod.nalezi])
     bod.nalezi.append(primka)
-    bod.update_spojeni()
-    primka.update_protina()
+    bod.spojesny_s.append([x for x in primka.elements])
 
-def pridej_primku(body:list[bod])->primka:
+def pridej_primku(body:list[bod])->None:
     nprimka= primka(body)
-    nprimka.update_protina()
-    primky.append(nprimka)
     for bod in body:
         bod.nalezi.append(nprimka)
-    return nprimka
+        nprimka.protina.append(bod.nalezi)
+    primky.append(nprimka)
+
 
 def pridej_bod(primka1:primka,primka2:primka)->None:
     nbod = bod([primka1,primka2],idlist[len(body)])
     primka1.elements.append(nbod)
     primka2.elements.append(nbod)
-    nbod.update_spojeni()
+    primka1.protina.append(primka2)
+    primka2.protina.append(primka1)
     body.append(nbod)
 
 
