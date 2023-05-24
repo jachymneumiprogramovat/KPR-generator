@@ -5,10 +5,9 @@ for it in range(5):
     body.append(bod([],idlist[it]))
 
 pridej_primku([body[0],body[1],body[2]])
-pridej_primku([body[1],body[3]])
+pridej_primku([body[1],body[4]])
 
-protahni_primku(primky[0],body[4])
-protahni_primku(primky[1],body[4])
+protahni_primku(primky[1],body[3])
 
 
 print_kprinfo()

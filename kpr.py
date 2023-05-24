@@ -8,14 +8,17 @@ class primka:
         self.elements=elements
         self.protina = [self]
     
-    def print_primkainfo(self):
+    def print_elements(self)->list:
         return ([x.id for x in self.elements])
     
-    def update_protina(self)->None:
-        for primka in primky:
-            for element in self.elements:
-                if element in primka.elements:
-                    self.protina.append(primka)
+    def print_primkainfo(self)->None:
+        print("jsem přímka:",self.print_elements())
+        print([x.print_elements() for x in self.protina])
+
+    def update_protina(self,primka)->None:
+        print(primka not in self.protina,primka.print_elements())
+        if primka not in self.protina:
+            self.protina.append(primka)
     
     def satisfy_line_axiom(self)->bool:
         """Vraci true, když line axiom platí pro danou přímku."""
@@ -41,7 +44,7 @@ class bod:
     
     def print_bodinfo(self):
         print(self.id)
-        print([primka.print_primkainfo() for primka in self.nalezi])
+        print([primka.print_elements() for primka in self.nalezi])
         print([x.id for x in self.spojeny_s])
     
     def update_spojeni(self,spojenci:list[object])->None:
@@ -61,11 +64,11 @@ def protahni_primku(primka:primka,bod:bod)->None:
     bod.nalezi.append(primka)
 
     for x in bod.nalezi:
-        primka.protina.append(x)
-        x.protina.append(primka)
+        primka.update_protina(x)
+        x.update_protina(primka)
     for x in primka.elements:
-        bod.spojeny_s.append(x)
-        x.spojeny_s.append(bod)
+        bod.update_spojeni([x])
+        x.update_spojeni([bod])
     
 
 def pridej_primku(body:list[bod])->None:
@@ -73,8 +76,10 @@ def pridej_primku(body:list[bod])->None:
     nprimka= primka(body)
     for bod in body:
         bod.update_spojeni(body)
+        for x in bod.nalezi:
+            nprimka.update_protina(x)
+            x.update_protina(nprimka)
         bod.nalezi.append(nprimka)
-        nprimka.protina.append(bod.nalezi)
     primky.append(nprimka)
 
 def pridej_bod(primka1:primka,primka2:primka)->None:
@@ -92,4 +97,4 @@ def print_kprinfo():
         vertex.print_bodinfo()
     print("Teď přímky:")
     for line in primky:
-        print(line.print_primkainfo())
+        line.print_primkainfo()
