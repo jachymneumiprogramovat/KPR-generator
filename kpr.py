@@ -4,9 +4,12 @@ body = []
 primky=[]
 
 class primka:
-    def __init__(self,elements:list[bod]) -> None:
+    def __init__(self,elements:list[object]) -> None:
         self.elements=elements
-        self.protina = []
+        self.protina = [self]
+    
+    def print_primkainfo(self):
+        return ([x.id for x in self.elements])
     
     def update_protina(self)->None:
         for primka in primky:
@@ -31,41 +34,48 @@ class primka:
         return satisfies
 
 class bod:
-    def __init__(self,protina:list[primka],id:str) -> None:
+    def __init__(self,nalezi:list[primka],id:str) -> None:
         self.id=id
-        self.nalezi=protina
-        self.spojesny_s = []
+        self.nalezi=nalezi
+        self.spojeny_s = [self]
     
-    def update_spojeni(self)->None:
-        for bod in body:
-            for primka in bod.protina:
-                if primka in self.nalezi:
-                    self.spojesny_s.append(bod)
+    def print_bodinfo(self):
+        print(self.id)
+        print([primka.print_primkainfo() for primka in self.nalezi])
+        print([x.id for x in self.spojeny_s])
+    
+    def update_spojeni(self,spojenci:list[object])->None:
+        for bod in spojenci:
+            if bod not in self.spojeny_s:
+                self.spojeny_s.append(bod)
 
     def satisfy_vertex_axiom(self):
         """Pocitá s tím, že line axiom je splněný. Vraci true, když je vertex axiom splěný pro daný bod."""
         for bod in body:
-            if bod in self.spojesny_s: continue
+            if bod in self.spojeny_s: continue
             pridej_primku(self,bod)
-
-            
-
 
 def protahni_primku(primka:primka,bod:bod)->None:
     """Přidá do přímky bod a zároveň updatuje všechny seznami"""
     primka.elements.append(bod)
-    primka.protina.append([x for x in bod.nalezi])
     bod.nalezi.append(primka)
-    bod.spojesny_s.append([x for x in primka.elements])
+
+    for x in bod.nalezi:
+        primka.protina.append(x)
+        x.protina.append(primka)
+    for x in primka.elements:
+        bod.spojeny_s.append(x)
+        x.spojeny_s.append(bod)
+    
 
 def pridej_primku(body:list[bod])->None:
     """Vytvoří novou přímku z bodů. Zjistí s jakými všemi přímkami se protíná"""
     nprimka= primka(body)
     for bod in body:
+        bod.update_spojeni(body)
         bod.nalezi.append(nprimka)
         nprimka.protina.append(bod.nalezi)
     primky.append(nprimka)
-
 
 def pridej_bod(primka1:primka,primka2:primka)->None:
     """Vytovří nový bod jako průnik dvou přímek ty upraví jako, že se protínají."""
@@ -76,6 +86,10 @@ def pridej_bod(primka1:primka,primka2:primka)->None:
     primka2.protina.append(primka1)
     body.append(nbod)
 
-
-
-
+def print_kprinfo():
+    print("Nejdříve body:")
+    for vertex in body:
+        vertex.print_bodinfo()
+    print("Teď přímky:")
+    for line in primky:
+        print(line.print_primkainfo())
