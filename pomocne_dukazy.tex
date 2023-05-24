@@ -1,6 +1,6 @@
 \documentclass{article}
-
-
+\usepackage{amsmath}
+\usepackage{amssymb}
 \begin{document}
 z předpokladu, že dva body každý leží na přímce, které se neprotínají chceme
 dokázat, že axiom o přímkách impluje, že nemůžeme žádnou přímku prodloužit tak
@@ -10,5 +10,33 @@ Kdybychom totiž jakokoliv prodloužili vytvořili bychom tak druhý průsečík
 dvěma přímkami. Protože z a1 plyne, že ty dvě přímky jedna na které ležel bod do
 kterého jsme prodloužili. a ta druhá kterou jsme prodloužili. už mají jeden
 průsečík. My jsme přidali další.
+
+
+
+Předpoklad je první axiom:
+
+\[
+ \forall p,q \in P: \exists! c \in B:p \cap q = c
+\]
+
+
+\[
+ \exists a,b \in B:\nexists p \in  P: a \subseteq p \wedge b \subseteq p
+\]
+Další předpoklad jsou dva body, které neleží na jedné přímce, ale zároveň na
+nějaké leží.
+\[
+ \exists p_a,q_b \in P: \exists a,b \in B: a \subseteq p_a \wedge b \subseteq
+ q_b
+\]
+\[
+ p_a \neq q_b \wedge a \neq b
+\]
+Přidejme tedy $b$ do $p_a$. Tím jsme porušili axiom 1 protože už předtím museli
+mít přímky $p_a$ a $q_b$ právě jeden průsečík. Teď jsme, ale vytvořili další.
+Jediné řešení této situace je, že by se body $c$ a $b$ rovnali. To by, ale
+znamenalo, že $b$ a $a$ leželi na jedné přímce což jde proti jednomu z
+předpokladů. 
+
 
 \end{document}
