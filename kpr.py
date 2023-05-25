@@ -75,6 +75,20 @@ def check_line_axiom()->bool:
                 print(f'Přímka {primka.print_elements()} má {pruseciky} průsečíků s přímkou {line.print_elements()} a to je špatně...')
     return ans
 
+def check_vertex_axiom()->bool:
+    ans = True
+    for bod in body:
+        for vertex in body:
+            if bod==vertex:continue
+            usecky=[]
+            for primka in primky:
+                if bod in primka and vertex in primka:
+                    usecky.append(primka)
+            if usecky!=1:
+                ans = False
+                print(f'Body {bod.id} a {vertex.id} se protínají na {len(usecky)} přímkách')
+    return ans
+
 def protahni_primku(primka:primka,bod:bod)->None:
     """Přidá do přímky bod a zároveň updatuje všechny seznami"""
     print(f'Protahuji přímku {primka.print_elements} o bod {bod.id}')
