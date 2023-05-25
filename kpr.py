@@ -1,4 +1,4 @@
-idlist = ["a","b","c","d","e","f","g","h","i","j","k"]
+idlist = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"]
 
 body = []
 primky=[]
@@ -21,13 +21,18 @@ class primka:
     
     def satisfy_line_axiom(self)->bool:
         """Danou přímku propojí se všemi se kterými zatím není propojená. Defaultně protahuje, když není možnost tak přidá nový bod."""
+        #Problém s tím, že to kontroluje jen orientovanou dvojici přímek
+        #a předtím než to zkusí druhou orientaci to vynese rozsudek
+        #proto musí nejdřívě zkusit najít na "cag" volný bod pro "ef" to když nevyjde
+        #tak zkusit najít volný bod na "ef" pro "cag"
+        #proto to asi budu muset přepsat na nějakou obecnou funkci, která dostane dvojici
+        #a zkusí to pro obě permutace. Pak by to mělo být chill
         for primka in primky:
-            if primka not in self.protina:
-                print("Tyto dve primky se protinaji")
-                self.print_primkainfo()
-                print(primka.print_elements(),primka in self.protina)
             if primka in self.protina: continue
             for bod in primka.elements:
+                if self.print_elements()==['c', 'a', 'g']:
+                    self.print_primkainfo()
+                    bod.print_bodinfo()
                 con =False
                 for line in bod.nalezi:
                     if line in self.protina:
@@ -55,39 +60,13 @@ class bod:
                 self.spojeny_s.append(bod)
 
     def satisfy_vertex_axiom(self):
-        """Pocitá s tím, že line axiom je splněný. Daný bod spojí se všemi body se kterými není spojený ."""
+        """Pocitá s tím, že line axiom je splněný. Daný bod spojí se všemi body se kterými není spojený."""
+        volne_body=[self]
         for bod in body:
             if bod in self.spojeny_s: continue
-            pridej_primku([self,bod])
-
-def check_line_axiom()->bool:
-    ans = True
-    #hledá jiný počet průsečíků než jedna
-    for primka in primky:
-        for line in primky:
-            pruseciky = 0
-            if primka == line:continue
-            for bod in line.elements:
-                if bod in primka.elements:
-                    pruseciky+=1
-            if pruseciky !=1:
-                ans = False
-                print(f'Přímka {primka.print_elements()} má {pruseciky} průsečíků s přímkou {line.print_elements()} a to je špatně...')
-    return ans
-
-def check_vertex_axiom()->bool:
-    ans = True
-    for bod in body:
-        for vertex in body:
-            if bod==vertex:continue
-            usecky=[]
-            for primka in primky:
-                if bod in primka and vertex in primka:
-                    usecky.append(primka)
-            if usecky!=1:
-                ans = False
-                print(f'Body {bod.id} a {vertex.id} se protínají na {len(usecky)} přímkách')
-    return ans
+            volne_body.append(bod)
+        if len(volne_body)==1: return
+        pridej_primku(volne_body)
 
 def protahni_primku(primka:primka,bod:bod)->None:
     """Přidá do přímky bod a zároveň updatuje všechny seznami"""
@@ -106,6 +85,7 @@ def protahni_primku(primka:primka,bod:bod)->None:
 def pridej_primku(body:list[bod])->None:
     """Vytvoří novou přímku z bodů. Zjistí s jakými všemi přímkami se protíná"""
     nprimka= primka(body)
+    print(f'Přidávám novou přímku {nprimka.print_elements()}')
     for bod in body:
         bod.update_spojeni(body)
         for x in bod.nalezi:
@@ -117,6 +97,7 @@ def pridej_primku(body:list[bod])->None:
 def pridej_bod(primka1:primka,primka2:primka)->None:
     """Vytovří nový bod jako průnik dvou přímek ty upraví jako, že se protínají."""
     nbod = bod([primka1,primka2],idlist[len(body)])
+    print(f'Nový bod {nbod.id} je průsečíkem {primka1.print_elements()} a {primka2.print_elements()}')
 
     primka1.elements.append(nbod)
     primka2.elements.append(nbod)
