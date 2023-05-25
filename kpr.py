@@ -85,11 +85,20 @@ def pridej_primku(body:list[bod])->None:
 def pridej_bod(primka1:primka,primka2:primka)->None:
     """Vytovří nový bod jako průnik dvou přímek ty upraví jako, že se protínají."""
     nbod = bod([primka1,primka2],idlist[len(body)])
+
     primka1.elements.append(nbod)
     primka2.elements.append(nbod)
     primka1.protina.append(primka2)
     primka2.protina.append(primka1)
+    #změnit pořadí když to bude nutné kvůli rychlosti
+    for vertex in primka1.elements:
+        vertex.update_spojeni([nbod])
+    for vertex in primka2.elements:
+        vertex.update_spojeni([nbod])
+
     body.append(nbod)
+    nbod.update_spojeni(primka1.elements)
+    nbod.update_spojeni(primka2.elements)
 
 def print_kprinfo():
     print("Nejdříve body:")
