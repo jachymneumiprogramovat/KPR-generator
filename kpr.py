@@ -16,25 +16,27 @@ class primka:
         print([x.print_elements() for x in self.protina])
 
     def update_protina(self,primka)->None:
-        print(primka not in self.protina,primka.print_elements())
         if primka not in self.protina:
             self.protina.append(primka)
     
     def satisfy_line_axiom(self)->bool:
-        """Vraci true, když line axiom platí pro danou přímku."""
-        satisfies = True
+        """Danou přímku propojí se všemi se kterými zatím není propojená. Defaultně protahuje, když není možnost tak přidá nový bod."""
         for primka in primky:
+            if primka not in self.protina:
+                print("Tyto dve primky se protinaji")
+                self.print_primkainfo()
+                print(primka.print_elements(),primka in self.protina)
             if primka in self.protina: continue
             for bod in primka.elements:
+                con =False
                 for line in bod.nalezi:
                     if line in self.protina:
+                        con = True
                         break
+                if con: continue
                 protahni_primku(self,bod)
-                satisfies = False
                 break
             pridej_bod(self,primka)
-            satisfies=False
-        return satisfies
 
 class bod:
     def __init__(self,nalezi:list[primka],id:str) -> None:
@@ -53,13 +55,29 @@ class bod:
                 self.spojeny_s.append(bod)
 
     def satisfy_vertex_axiom(self):
-        """Pocitá s tím, že line axiom je splněný. Vraci true, když je vertex axiom splěný pro daný bod."""
+        """Pocitá s tím, že line axiom je splněný. Daný bod spojí se všemi body se kterými není spojený ."""
         for bod in body:
             if bod in self.spojeny_s: continue
-            pridej_primku(self,bod)
+            pridej_primku([self,bod])
+
+def check_line_axiom()->bool:
+    ans = True
+    #hledá jiný počet průsečíků než jedna
+    for primka in primky:
+        for line in primky:
+            pruseciky = 0
+            if primka == line:continue
+            for bod in line.elements:
+                if bod in primka.elements:
+                    pruseciky+=1
+            if pruseciky !=1:
+                ans = False
+                print(f'Přímka {primka.print_elements()} má {pruseciky} průsečíků s přímkou {line.print_elements()} a to je špatně...')
+    return ans
 
 def protahni_primku(primka:primka,bod:bod)->None:
     """Přidá do přímky bod a zároveň updatuje všechny seznami"""
+    print(f'Protahuji přímku {primka.print_elements} o bod {bod.id}')
     primka.elements.append(bod)
     bod.nalezi.append(primka)
 
