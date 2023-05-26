@@ -29,19 +29,10 @@ class primka:
         #a zkusí to pro obě permutace. Pak by to mělo být chill
         for primka in primky:
             if primka in self.protina: continue
-            for bod in primka.elements:
-                if self.print_elements()==['c', 'a', 'g']:
-                    self.print_primkainfo()
-                    bod.print_bodinfo()
-                con =False
-                for line in bod.nalezi:
-                    if line in self.protina:
-                        con = True
-                        break
-                if con: continue
-                protahni_primku(self,bod)
-                break
-            pridej_bod(self,primka)
+            if spoj_primky(self,primka):
+                protahni_primku(spoj_primky(self,primka)[0],spoj_primky(self,primka)[1])
+            else:
+                pridej_bod(self,primka)
 
 class bod:
     def __init__(self,nalezi:list[primka],id:str) -> None:
@@ -68,9 +59,31 @@ class bod:
         if len(volne_body)==1: return
         pridej_primku(volne_body)
 
+
+def spoj_primky(primka1:primka,primka2:primka)->tuple[primka,bod]:
+    """Když existujou vrací bod a přímku takovou aby se přímka dala prodloužit o bod"""
+    for bod in primka1.elements:
+        con =False
+        for line in bod.nalezi:
+            if line in primka2.protina:
+                con=True
+                break
+        if con: continue
+        return [primka2,bod]
+    
+    for vertex in primka2.elements:
+        cont = False
+        for lin in vertex.nalezi:
+            if lin in primka1.protina:
+                cont = True
+                break
+        if cont: continue
+        return [primka1,vertex]
+    return False
+        
 def protahni_primku(primka:primka,bod:bod)->None:
     """Přidá do přímky bod a zároveň updatuje všechny seznami"""
-    print(f'Protahuji přímku {primka.print_elements} o bod {bod.id}')
+    print(f'Protahuji přímku {primka.print_elements()} o bod {bod.id}')
     primka.elements.append(bod)
     bod.nalezi.append(primka)
 
