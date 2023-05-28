@@ -21,12 +21,7 @@ class primka:
     
     def satisfy_line_axiom(self)->bool:
         """Danou přímku propojí se všemi se kterými zatím není propojená. Defaultně protahuje, když není možnost tak přidá nový bod."""
-        #Problém s tím, že to kontroluje jen orientovanou dvojici přímek
-        #a předtím než to zkusí druhou orientaci to vynese rozsudek
-        #proto musí nejdřívě zkusit najít na "cag" volný bod pro "ef" to když nevyjde
-        #tak zkusit najít volný bod na "ef" pro "cag"
-        #proto to asi budu muset přepsat na nějakou obecnou funkci, která dostane dvojici
-        #a zkusí to pro obě permutace. Pak by to mělo být chill
+        
         for primka in primky:
             if primka in self.protina: continue
             if spoj_primky(self,primka):
@@ -52,6 +47,7 @@ class bod:
 
     def satisfy_vertex_axiom(self):
         """Pocitá s tím, že line axiom je splněný. Daný bod spojí se všemi body se kterými není spojený."""
+
         volne_body=[self]
         for bod in body:
             if bod in self.spojeny_s: continue
@@ -62,6 +58,7 @@ class bod:
 
 def spoj_primky(primka1:primka,primka2:primka)->tuple[primka,bod]:
     """Když existujou vrací bod a přímku takovou aby se přímka dala prodloužit o bod"""
+
     for bod in primka1.elements:
         con =False
         for line in bod.nalezi:
@@ -83,6 +80,7 @@ def spoj_primky(primka1:primka,primka2:primka)->tuple[primka,bod]:
         
 def protahni_primku(primka:primka,bod:bod)->None:
     """Přidá do přímky bod a zároveň updatuje všechny seznami"""
+
     print(f'Protahuji přímku {primka.print_elements()} o bod {bod.id}')
     primka.elements.append(bod)
     bod.nalezi.append(primka)
@@ -97,6 +95,7 @@ def protahni_primku(primka:primka,bod:bod)->None:
 
 def pridej_primku(body:list[bod])->None:
     """Vytvoří novou přímku z bodů. Zjistí s jakými všemi přímkami se protíná"""
+
     nprimka= primka(body)
     print(f'Přidávám novou přímku {nprimka.print_elements()}')
     for bod in body:
@@ -109,6 +108,7 @@ def pridej_primku(body:list[bod])->None:
 
 def pridej_bod(primka1:primka,primka2:primka)->None:
     """Vytovří nový bod jako průnik dvou přímek ty upraví jako, že se protínají."""
+
     nbod = bod([primka1,primka2],idlist[len(body)])
     print(f'Nový bod {nbod.id} je průsečíkem {primka1.print_elements()} a {primka2.print_elements()}')
 
