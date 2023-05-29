@@ -38,13 +38,37 @@ def check_third_axiom():
         if opakuji_se_prvky(C): continue
         trojice = [[e,f,g] for e in C for f in C for g in C]
 
-        if vsechny_trojice_na_primce(trojice):
+        if vsechny_trojice_bodu_na_primce(trojice):
             continue
         print(f'Čtveřice {[x.id for x in C]} má všechny trojice, které neleží na jedné přímce.')
         return True
     return False
 
-def vsechny_trojice_na_primce(trojice:list[list[bod]])->bool:
+
+def check_fourth_axiom():
+    ctverice = [[a,b,c,d] for a in primky for b in primky for c in primky for d in primky]
+    for C in ctverice:
+        if opakuji_se_prvky(C):continue
+        trojice = [[e,f,g] for e in C for f in C for g in C]
+        if vsechny_trojice_primek_v_bodu(trojice):
+            continue
+        return True
+    return False 
+
+def vsechny_trojice_primek_v_bodu(trojice:list[list[primka]])->bool:
+    for T in trojice:
+        if opakuji_se_prvky(T):continue
+        for b in body:
+            con = False
+            for p in T:
+                if b not in p.elements:
+                    con = True
+                    break
+                if con:continue
+                return True
+    return False
+
+def vsechny_trojice_bodu_na_primce(trojice:list[list[bod]])->bool:
     for T in trojice:
         if opakuji_se_prvky(T):continue
         for p in primky:
