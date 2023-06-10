@@ -1,21 +1,26 @@
-body = []
-primky=[]
+body = []#seznam vsech bodu
+primky=[]#seznam vsech primek
 
 class primka:
+    """Trida pro primky"""
     def __init__(self,elements:list[object]) -> None:
         self.elements=elements
         self.protina = [self]
+        self.id = "".join([x.id for x in self.elements])
     
-    def print_elements(self)->list:
-        return ([x.id for x in self.elements])
+    def updateid(self)->None:
+        """Aktualizuje self.id z self.elements"""
+        self.id = "".join([x.id for x in self.elements])
     
-    def get_primkainfo(self)->None:
+    def get_primkainfo(self)->dict:
+        """Vrati vsechny informace o primce"""
         return {
-            "jsem primka:":self.print_elements(),
-            "protinam":[x.print_elements() for x in self.protina]
+            "jsem primka:":self.id,
+            "protinam":[x.id for x in self.protina]
         }
 
     def update_protina(self,primka)->None:
+        """Prida do self.protina jen kdyz tam ta primka uz neni"""
         if primka not in self.protina:
             self.protina.append(primka)
     
@@ -30,19 +35,22 @@ class primka:
                 pridej_bod(self,primka)
 
 class bod:
+    """Trida pro vsechny body"""
     def __init__(self,nalezi:list[primka],id:str) -> None:
         self.id=id
         self.nalezi=nalezi
         self.spojeny_s = [self]
     
-    def get_bodinfo(self):
+    def get_bodinfo(self)->dict:
+        """Vrati vsechny informace o bodu"""
         return {
             "jsem bod":self.id,
-            "spolecny bod primek":[primka.print_elements() for primka in self.nalezi],
+            "spolecny bod primek":[primka.id for primka in self.nalezi],
             "spojeny s":[x.id for x in self.spojeny_s]
         }
     
     def update_spojeni(self,spojenci:list[object])->None:
+        """Prida bod do self.spojeny_s jen kdyz tam uz neni"""
         for bod in spojenci:
             if bod not in self.spojeny_s:
                 self.spojeny_s.append(bod)
@@ -83,8 +91,9 @@ def spoj_primky(primka1:primka,primka2:primka)->tuple[primka,bod]:
 def protahni_primku(primka:primka,bod:bod)->None:
     """Přidá do přímky bod a zároveň updatuje všechny seznami"""
 
-    print(f'Protahuji přímku {primka.print_elements()} o bod {bod.id}')
+    print(f'Protahuji přímku {primka.id} o bod {bod.id}')
     primka.elements.append(bod)
+    primka.updateid()
     bod.nalezi.append(primka)
 
     for x in bod.nalezi:
@@ -99,7 +108,7 @@ def pridej_primku(body:list[bod])->None:
     """Vytvoří novou přímku z bodů. Zjistí s jakými všemi přímkami se protíná"""
 
     nprimka= primka(body)
-    print(f'Přidávám novou přímku {nprimka.print_elements()}')
+    print(f'Přidávám novou přímku {nprimka.id}')
     for bod in body:
         bod.update_spojeni(body)
         for x in bod.nalezi:
@@ -113,10 +122,12 @@ def pridej_bod(primka1:primka,primka2:primka)->None:
 
     from inout import idlist
     nbod = bod([primka1,primka2],idlist[len(body)])
-    print(f'Nový bod {nbod.id} je průsečíkem {primka1.print_elements()} a {primka2.print_elements()}')
+    print(f'Nový bod {nbod.id} je průsečíkem {primka1.id} a {primka2.id}')
 
     primka1.elements.append(nbod)
     primka2.elements.append(nbod)
+    primka1.updateid()
+    primka2.updateid()
     primka1.protina.append(primka2)
     primka2.protina.append(primka1)
     #změnit pořadí když to bude nutné kvůli rychlosti
