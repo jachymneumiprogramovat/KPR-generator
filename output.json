@@ -1,0 +1,92 @@
+Nejdrive body:[
+  {
+    "jsem bod": "a",
+    "spolecny bod primek": [
+      "adb",
+      "ca"
+    ],
+    "spojeny s": [
+      "a",
+      "d",
+      "c",
+      "b"
+    ]
+  },
+  {
+    "jsem bod": "b",
+    "spolecny bod primek": [
+      "bc",
+      "adb"
+    ],
+    "spojeny s": [
+      "b",
+      "c",
+      "a",
+      "d"
+    ]
+  },
+  {
+    "jsem bod": "c",
+    "spolecny bod primek": [
+      "bc",
+      "ca",
+      "cd"
+    ],
+    "spojeny s": [
+      "c",
+      "b",
+      "a",
+      "d"
+    ]
+  },
+  {
+    "jsem bod": "d",
+    "spolecny bod primek": [
+      "adb",
+      "cd"
+    ],
+    "spojeny s": [
+      "d",
+      "a",
+      "b",
+      "c"
+    ]
+  }
+]Ted primky:[
+  {
+    "jsem primka:": "bc",
+    "protinam": [
+      "bc",
+      "ca",
+      "adb",
+      "cd"
+    ]
+  },
+  {
+    "jsem primka:": "adb",
+    "protinam": [
+      "adb",
+      "ca",
+      "bc",
+      "cd"
+    ]
+  },
+  {
+    "jsem primka:": "ca",
+    "protinam": [
+      "ca",
+      "bc",
+      "adb",
+      "cd"
+    ]
+  },
+  {
+    "jsem primka:": "cd",
+    "protinam": [
+      "cd",
+      "bc",
+      "ca",
+      "adb"
+    ]
+  }
+]

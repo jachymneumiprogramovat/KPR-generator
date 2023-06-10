@@ -2,6 +2,7 @@ from kpr import primky,body
 from kpr import bod,primka
 
 def check_line_axiom()->bool:
+    """Kontroluje jestli každá přímka se protiná s každou druhou právě jednou"""
     ans = True
     #hledá jiný počet průsečíků než jedna
     for primka in primky:
@@ -18,6 +19,7 @@ def check_line_axiom()->bool:
 
 
 def check_vertex_axiom()->bool:
+    """Kontroluje jestli každými dvěma body prochází právě jedna přímka"""
     ans = True
     for bod in body:
         for vertex in body:
@@ -32,7 +34,8 @@ def check_vertex_axiom()->bool:
     return ans
 
 
-def check_third_axiom():
+def check_third_axiom()->bool:
+    """Kontroluje jestli existuje čtveřice bodů taková že žádná její podmnožina velikosti tři neleží na jedné přímce"""
     ctverice = [[a,b,c,d] for a in body for b in body for c in body for d in body]
     for C in ctverice:
         if opakuji_se_prvky(C): continue
@@ -46,6 +49,7 @@ def check_third_axiom():
 
 
 def check_fourth_axiom():
+    """Kontroluje jestli existuje čtveřice přímek taková že žádná její podmnožina velikosti tři se neprotíná v jednom bodě"""
     ctverice = [[a,b,c,d] for a in primky for b in primky for c in primky for d in primky]
     for C in ctverice:
         if opakuji_se_prvky(C):continue
@@ -56,6 +60,7 @@ def check_fourth_axiom():
     return False 
 
 def vsechny_trojice_primek_v_bodu(trojice:list[list[primka]])->bool:
+    """Pro všechny trojice přímek kontroluje jestli existuje bod ve kterém se všechny protínají """
     for T in trojice:
         if opakuji_se_prvky(T):continue
         for b in body:
@@ -69,6 +74,7 @@ def vsechny_trojice_primek_v_bodu(trojice:list[list[primka]])->bool:
     return False
 
 def vsechny_trojice_bodu_na_primce(trojice:list[list[bod]])->bool:
+    """Pro všechny trojice bodů kontroluje jestli existuje primka na ktere lezi"""
     for T in trojice:
         if opakuji_se_prvky(T):continue
         for p in primky:
@@ -82,6 +88,7 @@ def vsechny_trojice_bodu_na_primce(trojice:list[list[bod]])->bool:
     return False
 
 def opakuji_se_prvky(ntice:list)->bool:
+    """Kontroluje jestli se v ntici neopakuji prvky"""
     for iter in range(0,len(ntice)):
         vertex = ntice[iter]
         for j in range(iter+1,len(ntice)):

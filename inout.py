@@ -5,7 +5,7 @@ import json
 
 
 def load_starting_position():
-    data = json.load(open("starting.json"))
+    data = json.load(open("input.json"))
     global idlist
     idlist = data["idlist"]
 
@@ -19,7 +19,7 @@ def load_starting_position():
 def output_kprinfo():
     bodyinfo = [bod.get_bodinfo() for bod in body]
     primkainfo = [primka.get_primkainfo() for primka in primky]
-    with open("kpr.json","w") as outputfile:
+    with open("output.json","w") as outputfile:
         outputfile.write("Nejdrive body:")
         outputfile.write(json.dumps(bodyinfo,indent=2))
         outputfile.write("Ted primky:")

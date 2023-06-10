@@ -20,7 +20,7 @@ class primka:
         }
 
     def update_protina(self,primka)->None:
-        """Prida do self.protina jen kdyz tam ta primka uz neni"""
+        """Přidá do self.protina jen když tam ta přímka už není"""
         if primka not in self.protina:
             self.protina.append(primka)
     
@@ -35,14 +35,14 @@ class primka:
                 pridej_bod(self,primka)
 
 class bod:
-    """Trida pro vsechny body"""
+    """Třída pro všechny body"""
     def __init__(self,nalezi:list[primka],id:str) -> None:
         self.id=id
         self.nalezi=nalezi
         self.spojeny_s = [self]
     
     def get_bodinfo(self)->dict:
-        """Vrati vsechny informace o bodu"""
+        """Vrátí všechny informace o bodu"""
         return {
             "jsem bod":self.id,
             "spolecny bod primek":[primka.id for primka in self.nalezi],
@@ -50,7 +50,7 @@ class bod:
         }
     
     def update_spojeni(self,spojenci:list[object])->None:
-        """Prida bod do self.spojeny_s jen kdyz tam uz neni"""
+        """Přidá bod do self.spojeny_s jen když tam už není"""
         for bod in spojenci:
             if bod not in self.spojeny_s:
                 self.spojeny_s.append(bod)
@@ -67,7 +67,7 @@ class bod:
 
 
 def spoj_primky(primka1:primka,primka2:primka)->tuple[primka,bod]:
-    """Když existujou vrací bod a přímku takovou aby se přímka dala prodloužit o bod"""
+    """Když existují vrací bod a přímku takovou aby se přímka dala prodloužit o bod"""
 
     for bod in primka1.elements:
         con =False
