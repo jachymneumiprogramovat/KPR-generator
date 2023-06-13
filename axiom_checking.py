@@ -2,6 +2,7 @@ from kpr import primky,body
 from kpr import bod,primka
 
 def check_line_axiom()->bool:
+    #print("checking lina axiom",len(body))
     """Kontroluje jestli každá přímka se protiná s každou druhou právě jednou"""
     ans = True
     #hledá jiný počet průsečíků než jedna
@@ -19,6 +20,7 @@ def check_line_axiom()->bool:
 
 
 def check_vertex_axiom()->bool:
+    #print("checking veretx axiom",len(body))
     """Kontroluje jestli každými dvěma body prochází právě jedna přímka"""
     ans = True
     for bod in body:
@@ -35,6 +37,7 @@ def check_vertex_axiom()->bool:
 
 
 def check_third_axiom()->bool:
+    #print("checking third axiom")
     """Kontroluje jestli existuje čtveřice bodů taková že žádná její podmnožina velikosti tři neleží na jedné přímce"""
     ctverice = [[a,b,c,d] for a in body for b in body for c in body for d in body]
     for C in ctverice:

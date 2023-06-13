@@ -2,27 +2,29 @@ Nejdrive body:[
   {
     "jsem bod": "a",
     "spolecny bod primek": [
-      "adb",
-      "ca"
+      "ca",
+      "adbe"
     ],
     "spojeny s": [
       "a",
-      "d",
       "c",
-      "b"
+      "d",
+      "b",
+      "e"
     ]
   },
   {
     "jsem bod": "b",
     "spolecny bod primek": [
       "bc",
-      "adb"
+      "adbe"
     ],
     "spojeny s": [
       "b",
       "c",
       "a",
-      "d"
+      "d",
+      "e"
     ]
   },
   {
@@ -30,25 +32,55 @@ Nejdrive body:[
     "spolecny bod primek": [
       "bc",
       "ca",
-      "cd"
+      "ce",
+      "fdc"
     ],
     "spojeny s": [
       "c",
       "b",
       "a",
+      "e",
+      "f",
       "d"
     ]
   },
   {
     "jsem bod": "d",
     "spolecny bod primek": [
-      "adb",
-      "cd"
+      "adbe",
+      "fdc"
     ],
     "spojeny s": [
       "d",
       "a",
+      "f",
       "b",
+      "c",
+      "e"
+    ]
+  },
+  {
+    "jsem bod": "e",
+    "spolecny bod primek": [
+      "ce",
+      "adbe"
+    ],
+    "spojeny s": [
+      "e",
+      "c",
+      "a",
+      "d",
+      "b"
+    ]
+  },
+  {
+    "jsem bod": "f",
+    "spolecny bod primek": [
+      "fdc"
+    ],
+    "spojeny s": [
+      "f",
+      "d",
       "c"
     ]
   }
@@ -58,17 +90,9 @@ Nejdrive body:[
     "protinam": [
       "bc",
       "ca",
-      "adb",
-      "cd"
-    ]
-  },
-  {
-    "jsem primka:": "adb",
-    "protinam": [
-      "adb",
-      "ca",
-      "bc",
-      "cd"
+      "ce",
+      "adbe",
+      "fdc"
     ]
   },
   {
@@ -76,17 +100,39 @@ Nejdrive body:[
     "protinam": [
       "ca",
       "bc",
-      "adb",
-      "cd"
+      "adbe",
+      "ce",
+      "fdc"
     ]
   },
   {
-    "jsem primka:": "cd",
+    "jsem primka:": "adbe",
     "protinam": [
-      "cd",
+      "adbe",
+      "ca",
+      "fdc",
+      "bc",
+      "ce"
+    ]
+  },
+  {
+    "jsem primka:": "ce",
+    "protinam": [
+      "ce",
       "bc",
       "ca",
-      "adb"
+      "fdc",
+      "adbe"
+    ]
+  },
+  {
+    "jsem primka:": "fdc",
+    "protinam": [
+      "fdc",
+      "adbe",
+      "bc",
+      "ca",
+      "ce"
     ]
   }
 ]

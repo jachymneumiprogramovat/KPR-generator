@@ -33,6 +33,7 @@ class primka:
                 protahni_primku(spoj_primky(self,primka)[0],spoj_primky(self,primka)[1])
             else:
                 pridej_bod(self,primka)
+        #print("line axiom satisfied for",self.id)
 
 class bod:
     """Třída pro všechny body"""
@@ -55,15 +56,27 @@ class bod:
             if bod not in self.spojeny_s:
                 self.spojeny_s.append(bod)
 
-    def satisfy_vertex_axiom(self):
+    def satisfy_vertex_axiom(self)->None:
         """Pocitá s tím, že line axiom je splněný. Daný bod spojí se všemi body se kterými není spojený."""
 
         volne_body=[self]
         for bod in body:
-            if bod in self.spojeny_s: continue
+            if bod in self.spojeny_s or muzu_spojit_body(volne_body,bod): 
+                continue
+
             volne_body.append(bod)
-        if len(volne_body)==1: return
+        if len(volne_body)==1: return None
         pridej_primku(volne_body)
+
+
+def muzu_spojit_body(volne:list[bod],bod:bod)->bool:
+    for vertex in volne:
+        for primka in vertex.nalezi:
+            if primka in bod.nalezi:
+                return False
+    return True
+
+
 
 
 def spoj_primky(primka1:primka,primka2:primka)->tuple[primka,bod]:
